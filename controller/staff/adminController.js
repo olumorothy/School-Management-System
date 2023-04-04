@@ -22,11 +22,22 @@ exports.registerAdmin = async (req, res) => {
   }
 };
 
-exports.loginAdmin = (req, res) => {
+exports.loginAdmin = async (req, res) => {
+  const { email, password } = req.body;
   try {
-    res
-      .status(201)
-      .json({ status: "succes", data: "Admin has been logged in" });
+    const user = await Admin.findOne({ email });
+    if (!user) {
+      return res.json({ messagea: "Invalid login credentials" });
+    }
+
+    if (user && (await user.verifyPassword(password))) {
+      return res.json({ data: user });
+    } else {
+      return res.json({ messagea: "Invalid login credentials" });
+    }
+    // res
+    //   .status(201)
+    //   .json({ status: "succes", data: "Admin has been logged in" });
   } catch (err) {
     res.json({ status: "failed", error: err.message });
   }
