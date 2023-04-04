@@ -1,5 +1,7 @@
 const Admin = require("../../model/Staff/Admin");
 const AsyncHandler = require("express-async-handler");
+const { generateToken } = require("../../utils/generateToken");
+const { verifyToken } = require("../../utils/verifyToken");
 
 exports.registerAdmin = AsyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -20,27 +22,24 @@ exports.registerAdmin = AsyncHandler(async (req, res) => {
   res.status(201).json({ status: "succes", user });
 });
 
-exports.loginAdmin = async (req, res) => {
+exports.loginAdmin = AsyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  try {
-    const user = await Admin.findOne({ email });
-    if (!user) {
-      return res.json({ messagea: "Invalid login credentials" });
-    }
 
-    if (user && (await user.verifyPassword(password))) {
-      req.userAuth = user;
-      return res.json({ data: user });
-    } else {
-      return res.json({ messagea: "Invalid login credentials" });
-    }
-    // res
-    //   .status(201)
-    //   .json({ status: "succes", data: "Admin has been logged in" });
-  } catch (err) {
-    res.json({ status: "failed", error: err.message });
+  const user = await Admin.findOne({ email });
+  if (!user) {
+    return res.json({ messagea: "Invalid login credentials" });
   }
-};
+
+  if (user && (await user.verifyPassword(password))) {
+    const token = generateToken(user._id);
+
+    const verify = verifyToken(token);
+
+    return res.json({ data: generateToken(user._id), user, verify });
+  } else {
+    return res.json({ messagea: "Invalid login credentials" });
+  }
+});
 
 exports.getAllAdmins = (req, res) => {
   try {
