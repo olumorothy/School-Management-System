@@ -1,8 +1,22 @@
-exports.registerAdmin = (req, res) => {
+const Admin = require("../../model/Staff/Admin");
+
+exports.registerAdmin = async (req, res) => {
+  const { name, email, password } = req.body;
   try {
-    res
-      .status(201)
-      .json({ status: "succes", data: "Admin has been registered" });
+    //check if email exists
+
+    const adminFound = await Admin.findOne({ email });
+
+    if (adminFound) {
+      res.json("Admin Exists");
+    }
+
+    const user = await Admin.create({
+      name,
+      email,
+      password,
+    });
+    res.status(201).json({ status: "succes", user });
   } catch (err) {
     res.json({ status: "failed", error: err.message });
   }
