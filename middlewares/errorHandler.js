@@ -9,3 +9,8 @@ exports.globalErrHandler = (err, req, res, next) => {
     stack,
   });
 };
+
+exports.notFoundErr = (req, res, next) => {
+  const err = new Error(`Can't find ${req.originalUrl} on the server`);
+  next(err);
+};
