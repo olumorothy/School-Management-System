@@ -29,6 +29,7 @@ exports.loginAdmin = async (req, res) => {
     }
 
     if (user && (await user.verifyPassword(password))) {
+      req.userAuth = user;
       return res.json({ data: user });
     } else {
       return res.json({ messagea: "Invalid login credentials" });
