@@ -50,6 +50,7 @@ exports.getAllAdmins = (req, res) => {
 };
 
 exports.getAdmin = (req, res) => {
+  console.log(req.userAuth);
   try {
     res.status(201).json({ status: "succes", data: "Single admin" });
   } catch (err) {
