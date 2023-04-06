@@ -18,8 +18,38 @@ const adminSchema = new mongoose.Schema(
       type: String,
       default: "admin",
     },
+    academicTerms: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "AcademicTerm",
+      },
+    ],
+    AcademicYears: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "AcademicYear",
+      },
+    ],
+    classLevels: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "ClassLevel",
+      },
+    ],
+    teachers: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Teacher",
+      },
+    ],
+    Student: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Student",
+      },
+    ],
   },
-  { timeStamp: true }
+  { timestamps: true }
 );
 
 //Hashing user password

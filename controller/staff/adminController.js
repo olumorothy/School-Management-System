@@ -19,7 +19,13 @@ exports.registerAdmin = AsyncHandler(async (req, res) => {
     email,
     password,
   });
-  res.status(201).json({ status: "succes", user });
+  res
+    .status(201)
+    .json({
+      status: "succes",
+      data: user,
+      message: "Admin registered successfully",
+    });
 });
 
 exports.loginAdmin = AsyncHandler(async (req, res) => {
@@ -35,7 +41,10 @@ exports.loginAdmin = AsyncHandler(async (req, res) => {
 
     const verify = verifyToken(token);
 
-    return res.json({ data: generateToken(user._id), user, verify });
+    return res.json({
+      data: generateToken(user._id),
+      message: "Admin logged in successfully",
+    });
   } else {
     return res.json({ messagea: "Invalid login credentials" });
   }
@@ -57,7 +66,13 @@ exports.getAdminProfile = AsyncHandler(async (req, res) => {
   if (!admin) {
     throw new Error("Admin not found");
   } else {
-    res.status(200).json({ status: "success", data: admin });
+    res
+      .status(200)
+      .json({
+        status: "success",
+        data: admin,
+        message: "Admin profile fecthed successfully",
+      });
   }
 });
 
