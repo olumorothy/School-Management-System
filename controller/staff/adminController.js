@@ -49,14 +49,17 @@ exports.getAllAdmins = (req, res) => {
   }
 };
 
-exports.getAdmin = (req, res) => {
-  console.log(req.userAuth);
-  try {
-    res.status(201).json({ status: "succes", data: "Single admin" });
-  } catch (err) {
-    res.json({ status: "failed", error: err.message });
+exports.getAdminProfile = AsyncHandler(async (req, res) => {
+  const admin = await Admin.findById(req.userAuth._id).select(
+    "-password -role"
+  );
+
+  if (!admin) {
+    throw new Error("Admin not found");
+  } else {
+    res.status(200).json({ status: "success", data: admin });
   }
-};
+});
 
 exports.updateAdmin = (req, res) => {
   try {

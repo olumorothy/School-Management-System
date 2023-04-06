@@ -2,7 +2,7 @@ const express = require("express");
 const {
   registerAdmin,
   loginAdmin,
-  getAdmin,
+  getAdminProfile,
   getAllAdmins,
   updateAdmin,
   deleteAdmin,
@@ -23,7 +23,7 @@ adminRouter.post("/login", loginAdmin);
 
 adminRouter.get("/", getAllAdmins);
 
-adminRouter.get("/:id", isLoggedIn, getAdmin);
+adminRouter.get("/profile", isLoggedIn, getAdminProfile);
 
 adminRouter.put("/:id", updateAdmin);
 
