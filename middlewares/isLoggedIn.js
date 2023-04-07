@@ -1,7 +1,9 @@
 const { verifyToken } = require("../utils/verifyToken");
 const Admin = require("../model/Staff/Admin");
 exports.isLoggedIn = async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
+  const headerObj = req.headers;
+  const token = headerObj?.authorization?.split(" ")[1];
+
   const verifiedToken = verifyToken(token);
 
   if (verifiedToken) {

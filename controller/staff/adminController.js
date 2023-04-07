@@ -19,13 +19,11 @@ exports.registerAdmin = AsyncHandler(async (req, res) => {
     email,
     password,
   });
-  res
-    .status(201)
-    .json({
-      status: "succes",
-      data: user,
-      message: "Admin registered successfully",
-    });
+  res.status(201).json({
+    status: "succes",
+    data: user,
+    message: "Admin registered successfully",
+  });
 });
 
 exports.loginAdmin = AsyncHandler(async (req, res) => {
@@ -50,13 +48,14 @@ exports.loginAdmin = AsyncHandler(async (req, res) => {
   }
 });
 
-exports.getAllAdmins = (req, res) => {
-  try {
-    res.status(201).json({ status: "succes", data: "All Admins" });
-  } catch (err) {
-    res.json({ status: "failed", error: err.message });
-  }
-};
+exports.getAllAdmins = AsyncHandler(async (req, res) => {
+  const admins = await Admin.find();
+  res.status(200).json({
+    status: "success",
+    message: "Admin fetched successfully",
+    data: admins,
+  });
+});
 
 exports.getAdminProfile = AsyncHandler(async (req, res) => {
   const admin = await Admin.findById(req.userAuth._id).select(
@@ -66,13 +65,11 @@ exports.getAdminProfile = AsyncHandler(async (req, res) => {
   if (!admin) {
     throw new Error("Admin not found");
   } else {
-    res
-      .status(200)
-      .json({
-        status: "success",
-        data: admin,
-        message: "Admin profile fecthed successfully",
-      });
+    res.status(200).json({
+      status: "success",
+      data: admin,
+      message: "Admin profile fecthed successfully",
+    });
   }
 });
 
