@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-
-const AcademicYearSchema = new mongoose.Schema(
+const { Schema } = mongoose;
+const AcademicYearSchema = new Schema(
   {
     name: {
       type: String,
@@ -19,19 +19,19 @@ const AcademicYearSchema = new mongoose.Schema(
       default: false,
     },
     createdBy: {
-      type: mongoose.SchemaType.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Admin",
       required: true,
     },
     students: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Student",
       },
     ],
     teachers: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Teacher",
       },
     ],
