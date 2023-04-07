@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const AsyncHandler = require("express-async-handler");
 const { generateToken } = require("../../utils/generateToken");
 const { verifyToken } = require("../../utils/verifyToken");
+const { hashPassword, isPasswordMatched } = require("../../utils/helpers");
 
 exports.registerAdmin = AsyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -14,14 +15,10 @@ exports.registerAdmin = AsyncHandler(async (req, res) => {
     throw new Error("Admin Exists");
   }
 
-  //hashpassword
-  const salt = await bcrypt.genSalt(10);
-  passwordHashed = await bcrypt.hash(password, salt);
-
   const user = await Admin.create({
     name,
     email,
-    password: passwordHashed,
+    password: await hashPassword(password),
   });
   res.status(201).json({
     status: "succes",
@@ -38,8 +35,7 @@ exports.loginAdmin = AsyncHandler(async (req, res) => {
     return res.json({ messagea: "Email does not exist!" });
   }
 
-  const isMatched = await bcrypt.compare(password, user.password);
-
+  const isMatched = await isPasswordMatched(password, user.password);
   if (!isMatched) {
     return res.json({ message: "Invalid login credentials" });
   } else {
@@ -83,16 +79,13 @@ exports.updateAdmin = AsyncHandler(async (req, res) => {
   if (emailExist) {
     throw new Error("Email already exists/is taken");
   }
-  //hashing the password
-  const salt = await bcrypt.genSalt(10);
-  passwordHashed = await bcrypt.hash(password, salt);
 
   if (password) {
     const admin = await Admin.findByIdAndUpdate(
       req.userAuth._id,
       {
         email,
-        password: passwordHashed,
+        password: await hashPassword(password),
         name,
       },
       { new: true, runValidators: true }
