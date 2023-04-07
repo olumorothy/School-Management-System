@@ -18,7 +18,7 @@ const AcademicTermSchema = new Schema(
     },
 
     createdBy: {
-      type: mongoose.SchemaType.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
       required: true,
     },
