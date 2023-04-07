@@ -26,7 +26,7 @@ adminRouter.get("/", isLoggedIn, getAllAdmins);
 
 adminRouter.get("/profile", isLoggedIn, isAdmin, getAdminProfile);
 
-adminRouter.put("/:id", updateAdmin);
+adminRouter.put("/", isLoggedIn, isAdmin, updateAdmin);
 
 adminRouter.delete("/:id", deleteAdmin);
 
