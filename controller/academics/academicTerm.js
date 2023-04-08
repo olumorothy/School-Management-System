@@ -60,7 +60,7 @@ exports.getAcademicTerm = AsyncHandler(async (req, res) => {
 //@desc update academic term
 //@route PUT /api/v1/academic-term/:id
 //@access private
-exports.updateAcademicTerms = AsyncHandler(async (req, res) => {
+exports.updateAcademicTerm = AsyncHandler(async (req, res) => {
   const { name, description, duration } = req.body;
 
   const academicTermFound = await AcademicTerm.findOne({ name });
