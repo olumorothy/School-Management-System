@@ -30,6 +30,12 @@ const adminSchema = new mongoose.Schema(
         ref: "AcademicYear",
       },
     ],
+    programs: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Program",
+      },
+    ],
     classLevels: [
       {
         type: mongoose.Types.ObjectId,
