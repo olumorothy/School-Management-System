@@ -20,37 +20,43 @@ const adminSchema = new mongoose.Schema(
     },
     academicTerms: [
       {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "AcademicTerm",
       },
     ],
     AcademicYears: [
       {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "AcademicYear",
       },
     ],
     programs: [
       {
-        type: mongoose.Types.ObjectId,
-        ref: "Program",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "YearGroup",
+      },
+    ],
+    yearGroups: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "YearGroup",
       },
     ],
     classLevels: [
       {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "ClassLevel",
       },
     ],
     teachers: [
       {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Teacher",
       },
     ],
     Student: [
       {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Student",
       },
     ],
